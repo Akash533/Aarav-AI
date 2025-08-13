@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aarav AI — HUD (Web Preview)</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+</head>
+<body>
+  <canvas id="bgParticles" aria-hidden="true"></canvas>
+  <header class="topbar">
+    <div class="brand"><div class="brand-glow"></div><span class="brand-name">Aarav <b>AI</b></span></div>
+    <div id="timeDisplay" class="clock" aria-live="polite"></div>
+  </header>
+
+  <main class="layout">
+    <section class="status-strip" aria-label="Status Indicators">
+      <div class="status-item" data-status="System"><span class="dot dot-system"></span><span>System</span><div class="tip">All core systems operational</div></div>
+      <div class="status-item" data-status="Voice"><span class="dot dot-voice"></span><span>Voice</span><div class="tip">Voice recognition ready</div></div>
+      <div class="status-item" data-status="Security"><span class="dot dot-security"></span><span>Security</span><div class="tip">Security protocols active</div></div>
+      <div class="status-item" data-status="Mobile"><span class="dot dot-mobile"></span><span>Mobile</span><div class="tip">Mobile device synchronized</div></div>
+    </section>
+
+    <section class="core-wrap">
+      <button id="aiCore" class="ai-core" aria-pressed="false" aria-label="Toggle listening">
+        <div class="ring ring-outer"></div><div class="ring ring-mid"></div><div class="ring ring-inner"></div>
+        <div class="orb"><span id="moodEmoji" class="emoji">🙂</span></div>
+        <div id="voiceWaveform" class="wave hidden" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </button>
+
+      <div class="actions">
+        <button class="action-btn" data-action="home_control"><span class="icon">🏠</span><span class="action-label">Smart Home</span></button>
+        <button class="action-btn" data-action="security_panel"><span class="icon">🛡️</span><span class="action-label">Security</span></button>
+        <button class="action-btn" data-action="mobile_sync"><span class="icon">📱</span><span class="action-label">Mobile</span></button>
+        <button class="action-btn" data-action="open_settings"><span class="icon">⚙️</span><span class="action-label">Settings</span></button>
+        <button id="chatToggle" class="action-btn" data-action="open_chat"><span class="icon">💬</span><span class="action-label">Chat</span></button>
+        <button class="action-btn" data-action="show_analytics"><span class="icon">📊</span><span class="action-label">Analytics</span></button>
+      </div>
+
+      <div class="voice-panel card">
+        <h3>Voice Settings</h3>
+        <div class="voice-row">
+          <label for="micSelect">Microphone</label>
+          <select id="micSelect"></select>
+          <button id="micTest" class="btn">Test Mic</button>
+        </div>
+        <div class="voice-row">
+          <label for="langSelect">Language</label>
+          <select id="langSelect">
+            <option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+            <option value="hi-IN">Hindi (India)</option>
+            <option value="hi-IN-x-mt">Hinglish</option>
+            <option value="auto">Auto</option>
+          </select>
+          <button id="startRec" class="btn">Start Recognition</button>
+        </div>
+        <div class="voice-row">
+          <label>Sensitivity</label>
+          <input id="sensitivity" type="range" min="0" max="100" value="50" />
+          <div id="levelViz" class="level-viz" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="voice-row small">
+          <small>Click <b>Start Recognition</b> then speak. Transcription will appear in the chat. (iOS: Safari support varies.)</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="system-panel">
+      <header class="panel-head"><h2>System Info</h2><button id="systemInfoToggle" class="chevron" aria-expanded="true">▾</button></header>
+      <div id="systemInfoContent" class="panel-body">
+        <div class="info-row"><span>CPU</span><div class="bar"><em class="fill info-fill" style="width: 42%"></em></div><b class="info-value">42%</b></div>
+        <div class="info-row"><span>Memory</span><div class="bar"><em class="fill info-fill" style="width: 58%"></em></div><b class="info-value">58%</b></div>
+        <div class="info-row"><span>Network</span><div class="bar"><em class="fill info-fill" style="width: 23%"></em></div><b class="info-value">23%</b></div>
+      </div>
+    </section>
+  </main>
+
+  <aside id="chatInterface" class="chat hidden" aria-label="Chat panel">
+    <header class="chat-head"><h3>Chat • Aarav AI</h3><button id="chatClose" class="chat-close" aria-label="Close chat">✕</button></header>
+    <div id="chatMessages" class="chat-body" role="log" aria-live="polite"></div>
+    <footer class="chat-foot">
+      <input id="chatInput" type="text" placeholder="Type a message…" aria-label="Message input" />
+      <button id="chatSend" class="send" aria-label="Send">Send</button>
+    </footer>
+  </aside>
+
+  <div id="notificationContainer" class="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+  <script>
+    if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>console.warn('SW failed')); }
+  </script>
+</body>
+</html>
