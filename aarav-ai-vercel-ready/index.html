@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Aarav AI — HUD (Web Preview)</title>
+  <title>Aarav AI — Your Personal Assistant</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#0b1220" />
+  <meta name="theme-color" content="#F5F7FA" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
@@ -20,15 +20,14 @@
 
   <main class="layout">
     <section class="status-strip" aria-label="Status Indicators">
-      <div class="status-item" data-status="System"><span class="dot dot-system"></span><span>System</span><div class="tip">All core systems operational</div></div>
-      <div class="status-item" data-status="Voice"><span class="dot dot-voice"></span><span>Voice</span><div class="tip">Voice recognition ready</div></div>
-      <div class="status-item" data-status="Security"><span class="dot dot-security"></span><span>Security</span><div class="tip">Security protocols active</div></div>
-      <div class="status-item" data-status="Mobile"><span class="dot dot-mobile"></span><span>Mobile</span><div class="tip">Mobile device synchronized</div></div>
+      <div class="status-item" data-status="System"><span class="dot dot-system"></span><span>System</span></div>
+      <div class="status-item" data-status="Voice"><span class="dot dot-voice"></span><span>Voice</span></div>
+      <div class="status-item" data-status="Security"><span class="dot dot-security"></span><span>Security</span></div>
+      <div class="status-item" data-status="Mobile"><span class="dot dot-mobile"></span><span>Mobile</span></div>
     </section>
 
     <section class="core-wrap">
       <button id="aiCore" class="ai-core" aria-pressed="false" aria-label="Toggle listening">
-        <div class="ring ring-outer"></div><div class="ring ring-mid"></div><div class="ring ring-inner"></div>
         <div class="orb"><span id="moodEmoji" class="emoji">🙂</span></div>
         <div id="voiceWaveform" class="wave hidden" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </button>
@@ -42,7 +41,7 @@
         <button class="action-btn" data-action="show_analytics"><span class="icon">📊</span><span class="action-label">Analytics</span></button>
       </div>
 
-      <div class="voice-panel card">
+      <div class="voice-panel" style="display:none;">
         <h3>Voice Settings</h3>
         <div class="voice-row">
           <label for="micSelect">Microphone</label>
