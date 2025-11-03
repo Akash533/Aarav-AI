@@ -582,7 +582,8 @@ body{
   background:rgba(99,102,241,.95);
   color:#fff;
   border-color:rgba(99,102,241,.3);
-}#bgParticles{
+}
+#bgParticles{
   position:fixed;
   inset:0;
   z-index:-1;

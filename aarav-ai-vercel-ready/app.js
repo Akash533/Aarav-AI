@@ -1,6 +1,24 @@
 /* Aarav AI - Modern Design (Web Speech + mic options) */
 class AaravAI {
-  constructor(){ this.mediaStream=null; this.audioCtx=null; this.analyser=null; this.recognition=null; this.micDevices=[]; this.isListening=false; this.moods=[{name:'calm',emoji:'\u{1F642}',hue:190},{name:'happy',emoji:'\u{1F604}',hue:180},{name:'focus',emoji:'\u{1F9D0}',hue:200},{name:'alert',emoji:'\u{26A1}',hue:50},{name:'thinking',emoji:'\u{1F914}',hue:220}]; this.sampleResponses=[{trigger:['lights','light'],response:'Lights are now on.'},{trigger:['weather'],response:"It's sunny."}]; }
+  constructor(){
+    this.mediaStream=null;
+    this.audioCtx=null;
+    this.analyser=null;
+    this.recognition=null;
+    this.micDevices=[];
+    this.isListening=false;
+    this.moods=[
+      {name:'calm',emoji:'\u{1F642}',hue:190},
+      {name:'happy',emoji:'\u{1F604}',hue:180},
+      {name:'focus',emoji:'\u{1F9D0}',hue:200},
+      {name:'alert',emoji:'\u{26A1}',hue:50},
+      {name:'thinking',emoji:'\u{1F914}',hue:220}
+    ];
+    this.sampleResponses=[
+      {trigger:['lights','light'],response:'Lights are now on.'},
+      {trigger:['weather'],response:"It's sunny."}
+    ];
+  }
   async init(){ this.cache(); this.bind(); this.updateTime(); setInterval(()=>this.updateTime(),1000); this.animateParticles(); await this.enumerateAudio(); this.setupRecognition(); this.setMood('calm'); this.showNotification('Aarav AI ready','success',1400); }
   cache(){ this.timeDisplay=document.getElementById('timeDisplay'); this.aiCore=document.getElementById('aiCore'); this.voiceWaveform=document.getElementById('voiceWaveform'); this.moodEmoji=document.getElementById('moodEmoji'); this.chatToggle=document.getElementById('chatToggle'); this.chatClose=document.getElementById('chatClose'); this.chatSend=document.getElementById('chatSend'); this.chatInput=document.getElementById('chatInput'); this.chatMessages=document.getElementById('chatMessages'); this.chatInterface=document.getElementById('chatInterface'); this.micSelect=document.getElementById('micSelect'); this.micTest=document.getElementById('micTest'); this.startRec=document.getElementById('startRec'); this.langSelect=document.getElementById('langSelect'); this.sensitivity=document.getElementById('sensitivity'); this.levelViz=document.getElementById('levelViz'); this.notificationContainer=document.getElementById('notificationContainer'); this.systemInfoToggle=document.getElementById('systemInfoToggle'); this.systemInfoContent=document.getElementById('systemInfoContent'); this.bgCanvas=document.getElementById('bgParticles'); }
   bind(){ this.aiCore.addEventListener('click',()=>this.toggleListening()); this.chatToggle.addEventListener('click',()=>this.toggleChat()); this.chatClose.addEventListener('click',()=>this.toggleChat()); this.chatSend.addEventListener('click',()=>this.sendMessage()); this.chatInput.addEventListener('keypress',e=>{ if(e.key==='Enter') this.sendMessage(); }); this.micTest.addEventListener('click',()=>this.testMic()); this.startRec.addEventListener('click',()=>this.startRecognition()); this.systemInfoToggle.addEventListener('click',()=>this.toggleSystemInfo()); document.querySelectorAll('.action-btn').forEach(btn=>btn.addEventListener('click',e=>{ this.ripple(btn,e); this.handleQuickAction(btn.dataset.action, btn.querySelector('.action-label')?.textContent); })); document.addEventListener('keydown',e=>{ if(e.code==='Space'){ e.preventDefault(); this.toggleListening(); } if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='c'){ e.preventDefault(); this.toggleChat(); } }); }
