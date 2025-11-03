@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Aarav AI - Mobile Assistant</title>
+  <link rel="stylesheet" href="mobile-app.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6366F1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+  <!-- App Container -->
+  <div id="app" class="app-container">
+    
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="screen active" data-screen="splash">
+      <div class="splash-content">
+        <div class="logo-container">
+          <div class="logo-circle">
+            <svg viewBox="0 0 100 100" class="logo-svg">
+              <circle cx="50" cy="50" r="45" fill="url(#logoGradient)" />
+              <defs>
+                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#6366F1;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="logo-text">A</div>
+          </div>
+        </div>
+        <h1 class="app-name">Aarav AI</h1>
+        <p class="tagline">Your Intelligent Assistant</p>
+        <div class="loading-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Home Dashboard Screen -->
+    <div id="homeScreen" class="screen" data-screen="home">
+      <header class="mobile-header">
+        <div class="header-content">
+          <div class="greeting">
+            <h2 id="greetingText">Good Morning</h2>
+            <p id="userName">Akash</p>
+          </div>
+          <button class="profile-btn" data-navigate="settings">
+            <div class="avatar">
+              <span>A</span>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <main class="screen-content">
+        <!-- Quick Stats -->
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">📋</div>
+            <div class="stat-info">
+              <span class="stat-value">5</span>
+              <span class="stat-label">Tasks Today</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+              <span class="stat-value">12</span>
+              <span class="stat-label">Completed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Suggestion Card -->
+        <div class="suggestion-card gradient-card">
+          <div class="suggestion-header">
+            <span class="ai-badge">✨ AI Suggestion</span>
+          </div>
+          <h3>Time to review your weekly goals</h3>
+          <p>You've completed 80% of your weekly tasks. Great progress!</p>
+          <button class="btn-primary">Review Now</button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="section-header">
+          <h3>Quick Actions</h3>
+        </div>
+        <div class="quick-actions">
+          <button class="action-card" data-navigate="tasks">
+            <div class="action-icon gradient-bg-1">📝</div>
+            <span class="action-label">Tasks</span>
+          </button>
+          <button class="action-card" data-navigate="content">
+            <div class="action-icon gradient-bg-2">✍️</div>
+            <span class="action-label">Create</span>
+          </button>
+          <button class="action-card" data-navigate="chat">
+            <div class="action-icon gradient-bg-3">💬</div>
+            <span class="action-label">Chat</span>
+          </button>
+          <button class="action-card" data-navigate="settings">
+            <div class="action-icon gradient-bg-4">⚙️</div>
+            <span class="action-label">Settings</span>
+          </button>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="section-header">
+          <h3>Recent Activity</h3>
+          <button class="text-link">View All</button>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-icon">📋</div>
+            <div class="activity-content">
+              <p class="activity-title">Task completed: Project review</p>
+              <span class="activity-time">2 hours ago</span>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon">✍️</div>
+            <div class="activity-content">
+              <p class="activity-title">Content generated: Email draft</p>
+              <span class="activity-time">5 hours ago</span>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon">💬</div>
+            <div class="activity-content">
+              <p class="activity-title">Chat session: Planning meeting</p>
+              <span class="activity-time">Yesterday</span>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <nav class="bottom-nav">
+        <button class="nav-item active" data-navigate="home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" data-navigate="tasks">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Tasks</span>
+        </button>
+        <button class="nav-item nav-fab" data-navigate="chat">
+          <span class="nav-icon">💬</span>
+        </button>
+        <button class="nav-item" data-navigate="content">
+          <span class="nav-icon">✍️</span>
+          <span class="nav-label">Create</span>
+        </button>
+        <button class="nav-item" data-navigate="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Task Management Screen -->
+    <div id="tasksScreen" class="screen" data-screen="tasks">
+      <header class="mobile-header secondary">
+        <button class="back-btn" data-navigate="home">
+          <span>←</span>
+        </button>
+        <h2>Tasks</h2>
+        <button class="add-btn" id="addTaskBtn">
+          <span>+</span>
+        </button>
+      </header>
+
+      <main class="screen-content">
+        <!-- Task Filters -->
+        <div class="filter-chips">
+          <button class="chip active">All</button>
+          <button class="chip">Today</button>
+          <button class="chip">Upcoming</button>
+          <button class="chip">Completed</button>
+        </div>
+
+        <!-- AI Task Suggestion -->
+        <div class="ai-task-suggest">
+          <div class="ai-avatar">✨</div>
+          <div class="ai-suggest-content">
+            <p><strong>AI Suggestion:</strong> Create a task for "Weekly report preparation"?</p>
+            <div class="suggest-actions">
+              <button class="btn-sm btn-primary">Add Task</button>
+              <button class="btn-sm btn-secondary">Dismiss</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task List -->
+        <div class="task-list">
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="task1">
+            <label for="task1" class="task-content">
+              <span class="task-title">Review project documentation</span>
+              <span class="task-meta">
+                <span class="task-tag priority-high">High Priority</span>
+                <span class="task-time">Today, 2:00 PM</span>
+              </span>
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="task2">
+            <label for="task2" class="task-content">
+              <span class="task-title">Prepare presentation slides</span>
+              <span class="task-meta">
+                <span class="task-tag priority-medium">Medium</span>
+                <span class="task-time">Tomorrow, 10:00 AM</span>
+              </span>
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="task3">
+            <label for="task3" class="task-content">
+              <span class="task-title">Team meeting discussion points</span>
+              <span class="task-meta">
+                <span class="task-tag priority-low">Low</span>
+                <span class="task-time">Next week</span>
+              </span>
+            </label>
+          </div>
+          <div class="task-item completed">
+            <input type="checkbox" class="task-checkbox" id="task4" checked>
+            <label for="task4" class="task-content">
+              <span class="task-title">Email client about updates</span>
+              <span class="task-meta">
+                <span class="task-time">Completed today</span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </main>
+
+      <nav class="bottom-nav">
+        <button class="nav-item" data-navigate="home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item active" data-navigate="tasks">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Tasks</span>
+        </button>
+        <button class="nav-item nav-fab" data-navigate="chat">
+          <span class="nav-icon">💬</span>
+        </button>
+        <button class="nav-item" data-navigate="content">
+          <span class="nav-icon">✍️</span>
+          <span class="nav-label">Create</span>
+        </button>
+        <button class="nav-item" data-navigate="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Content Generation Screen -->
+    <div id="contentScreen" class="screen" data-screen="content">
+      <header class="mobile-header secondary">
+        <button class="back-btn" data-navigate="home">
+          <span>←</span>
+        </button>
+        <h2>Content Generator</h2>
+        <button class="help-btn">
+          <span>?</span>
+        </button>
+      </header>
+
+      <main class="screen-content">
+        <!-- Content Type Selector -->
+        <div class="section-header">
+          <h3>What would you like to create?</h3>
+        </div>
+        <div class="content-types">
+          <button class="content-type-card active">
+            <div class="content-type-icon">✉️</div>
+            <span class="content-type-label">Email</span>
+          </button>
+          <button class="content-type-card">
+            <div class="content-type-icon">📝</div>
+            <span class="content-type-label">Article</span>
+          </button>
+          <button class="content-type-card">
+            <div class="content-type-icon">💡</div>
+            <span class="content-type-label">Ideas</span>
+          </button>
+          <button class="content-type-card">
+            <div class="content-type-icon">📱</div>
+            <span class="content-type-label">Social Post</span>
+          </button>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-card">
+          <label class="input-label">Describe what you need</label>
+          <textarea 
+            class="content-input" 
+            placeholder="E.g., Write a professional email to schedule a meeting with the marketing team..."
+            rows="4"
+          ></textarea>
+          
+          <div class="input-options">
+            <label class="option-item">
+              <span>Tone:</span>
+              <select class="option-select">
+                <option>Professional</option>
+                <option>Casual</option>
+                <option>Friendly</option>
+                <option>Formal</option>
+              </select>
+            </label>
+            <label class="option-item">
+              <span>Length:</span>
+              <select class="option-select">
+                <option>Short</option>
+                <option>Medium</option>
+                <option>Long</option>
+              </select>
+            </label>
+          </div>
+
+          <button class="btn-primary btn-full">
+            <span>✨</span> Generate Content
+          </button>
+        </div>
+
+        <!-- Generated Content Preview -->
+        <div class="generated-preview">
+          <div class="preview-header">
+            <h4>Generated Content</h4>
+            <button class="icon-btn">📋</button>
+          </div>
+          <div class="preview-content">
+            <p>Your AI-generated content will appear here...</p>
+          </div>
+        </div>
+      </main>
+
+      <nav class="bottom-nav">
+        <button class="nav-item" data-navigate="home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" data-navigate="tasks">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Tasks</span>
+        </button>
+        <button class="nav-item nav-fab" data-navigate="chat">
+          <span class="nav-icon">💬</span>
+        </button>
+        <button class="nav-item active" data-navigate="content">
+          <span class="nav-icon">✍️</span>
+          <span class="nav-label">Create</span>
+        </button>
+        <button class="nav-item" data-navigate="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Chat & AI Interaction Screen -->
+    <div id="chatScreen" class="screen" data-screen="chat">
+      <header class="mobile-header gradient-header">
+        <button class="back-btn light" data-navigate="home">
+          <span>←</span>
+        </button>
+        <div class="chat-header-info">
+          <div class="ai-status">
+            <div class="status-dot active"></div>
+            <span>Aarav AI</span>
+          </div>
+          <span class="status-text">Online</span>
+        </div>
+        <button class="more-btn light">
+          <span>⋮</span>
+        </button>
+      </header>
+
+      <main class="chat-content">
+        <div class="chat-messages" id="chatMessages">
+          <!-- Welcome Message -->
+          <div class="message-group ai">
+            <div class="message-avatar">
+              <span>A</span>
+            </div>
+            <div class="message-bubble">
+              <p>Hello! I'm Aarav AI. How can I assist you today? 👋</p>
+              <span class="message-time">10:30 AM</span>
+            </div>
+          </div>
+
+          <!-- User Message -->
+          <div class="message-group user">
+            <div class="message-bubble">
+              <p>Help me plan my week</p>
+              <span class="message-time">10:31 AM</span>
+            </div>
+          </div>
+
+          <!-- AI Response -->
+          <div class="message-group ai">
+            <div class="message-avatar">
+              <span>A</span>
+            </div>
+            <div class="message-bubble">
+              <p>I'd be happy to help you plan your week! Let me gather some information:</p>
+              <div class="suggestion-chips">
+                <button class="suggestion-chip">View Calendar</button>
+                <button class="suggestion-chip">Check Tasks</button>
+                <button class="suggestion-chip">Set Goals</button>
+              </div>
+              <span class="message-time">10:31 AM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Suggestions -->
+        <div class="quick-suggestions">
+          <button class="quick-suggestion">Schedule meeting</button>
+          <button class="quick-suggestion">Create task</button>
+          <button class="quick-suggestion">Write email</button>
+        </div>
+      </main>
+
+      <footer class="chat-input-container">
+        <button class="attachment-btn">
+          <span>+</span>
+        </button>
+        <div class="input-wrapper">
+          <input 
+            type="text" 
+            class="chat-input" 
+            placeholder="Type your message..."
+            id="chatInput"
+          >
+          <button class="voice-btn">
+            <span>🎤</span>
+          </button>
+        </div>
+        <button class="send-btn" id="sendChatBtn">
+          <span>→</span>
+        </button>
+      </footer>
+    </div>
+
+    <!-- Settings/Profile Screen -->
+    <div id="settingsScreen" class="screen" data-screen="settings">
+      <header class="mobile-header secondary">
+        <button class="back-btn" data-navigate="home">
+          <span>←</span>
+        </button>
+        <h2>Settings</h2>
+        <button class="edit-btn">Edit</button>
+      </header>
+
+      <main class="screen-content">
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <div class="profile-avatar-large">
+            <span>A</span>
+            <button class="edit-avatar-btn">📷</button>
+          </div>
+          <h3>Akash</h3>
+          <p class="profile-email">akash@example.com</p>
+        </div>
+
+        <!-- Settings Sections -->
+        <div class="settings-section">
+          <h4 class="settings-section-title">Account</h4>
+          <div class="settings-list">
+            <button class="settings-item">
+              <div class="settings-item-icon">👤</div>
+              <div class="settings-item-content">
+                <span class="settings-item-label">Personal Information</span>
+                <span class="settings-item-value">Update your details</span>
+              </div>
+              <span class="settings-item-arrow">›</span>
+            </button>
+            <button class="settings-item">
+              <div class="settings-item-icon">🔔</div>
+              <div class="settings-item-content">
+                <span class="settings-item-label">Notifications</span>
+                <span class="settings-item-value">Manage alerts</span>
+              </div>
+              <span class="settings-item-arrow">›</span>
+            </button>
+            <button class="settings-item">
+              <div class="settings-item-icon">🔒</div>
+              <div class="settings-item-content">
+                <span class="settings-item-label">Privacy & Security</span>
+                <span class="settings-item-value">Control your data</span>
+              </div>
+              <span class="settings-item-arrow">›</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h4 class="settings-section-title">AI Assistant</h4>
+          <div class="settings-list">
+            <button class="settings-item">
+              <div class="settings-item-icon">🎨</div>
+              <div class="settings-item-content">
+                <span class="settings-item-label">Appearance</span>
+                <span class="settings-item-value">Light mode</span>
+              </div>
+              <span class="settings-item-arrow">›</span>
+            </button>
+            <button class="settings-item">
+              <div class="settings-item-icon">🗣️</div>
+              <div class="settings-item-content">
+                <span class="settings-item-label">Voice Settings</span>
+                <span class="settings-item-value">English (US)</span>
+              </div>
+              <span class="settings-item-arrow">›</span>
+            </button>
+            <button class="settings-item">
+              <div class="settings-item-icon">⚡</div>
+              <div class="settings-item-content">
+                <span class="settings-item-label">AI Behavior</span>
+                <span class="settings-item-value">Customize responses</span>
+              </div>
+              <span class="settings-item-arrow">›</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h4 class="settings-section-title">Support</h4>
+          <div class="settings-list">
+            <button class="settings-item">
+              <div class="settings-item-icon">❓</div>
+              <div class="settings-item-content">
+                <span class="settings-item-label">Help Center</span>
+                <span class="settings-item-value">Get support</span>
+              </div>
+              <span class="settings-item-arrow">›</span>
+            </button>
+            <button class="settings-item">
+              <div class="settings-item-icon">📝</div>
+              <div class="settings-item-content">
+                <span class="settings-item-label">Terms & Privacy</span>
+                <span class="settings-item-value">Legal information</span>
+              </div>
+              <span class="settings-item-arrow">›</span>
+            </button>
+            <button class="settings-item">
+              <div class="settings-item-icon">ℹ️</div>
+              <div class="settings-item-content">
+                <span class="settings-item-label">About</span>
+                <span class="settings-item-value">Version 1.0.0</span>
+              </div>
+              <span class="settings-item-arrow">›</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="btn-danger btn-full">Sign Out</button>
+      </main>
+
+      <nav class="bottom-nav">
+        <button class="nav-item" data-navigate="home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" data-navigate="tasks">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Tasks</span>
+        </button>
+        <button class="nav-item nav-fab" data-navigate="chat">
+          <span class="nav-icon">💬</span>
+        </button>
+        <button class="nav-item" data-navigate="content">
+          <span class="nav-icon">✍️</span>
+          <span class="nav-label">Create</span>
+        </button>
+        <button class="nav-item active" data-navigate="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+    </div>
+
+  </div>
+
+  <script src="mobile-app.js"></script>
+</body>
+</html>
