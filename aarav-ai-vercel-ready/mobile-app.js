@@ -355,25 +355,10 @@ class AaravMobileApp {
   
   addTask() {
     // Show notification for demo purposes
-    this.showNotification('Task creation feature coming soon!', 'info');
+    this.showNotification('Task creation coming soon! Use AI suggestions to add tasks.', 'info');
     
-    // In a real app, this would open a modal or navigate to task creation screen
-    const taskTitle = prompt('Enter task title:');
-    if (taskTitle) {
-      const newTask = {
-        id: this.tasks.length + 1,
-        title: taskTitle,
-        completed: false,
-        priority: 'medium',
-        time: 'Today'
-      };
-      
-      this.tasks.push(newTask);
-      this.showNotification('Task added successfully! ✅', 'success');
-      
-      // Refresh task list (in a real app, this would update the DOM)
-      console.log('New task added:', newTask);
-    }
+    // In a production app, this would open a custom modal or navigate to task creation screen
+    // For now, we demonstrate the feature without breaking the UI with native dialogs
   }
   
   generateContent() {
@@ -474,7 +459,7 @@ What are your thoughts? Drop a comment below and let's discuss! 👇
       border-radius: 12px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       z-index: 9999;
-      animation: slideDown 0.3s ease-out;
+      animation: notificationSlideIn 0.3s ease-out;
       max-width: 90%;
       text-align: center;
       font-weight: 500;
@@ -483,28 +468,11 @@ What are your thoughts? Drop a comment below and let's discuss! 👇
     
     document.body.appendChild(notification);
     
-    // Add animation
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes slideDown {
-        from {
-          opacity: 0;
-          transform: translate(-50%, -20px);
-        }
-        to {
-          opacity: 1;
-          transform: translate(-50%, 0);
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    
     // Remove after 3 seconds
     setTimeout(() => {
-      notification.style.animation = 'slideUp 0.3s ease-out';
+      notification.style.animation = 'notificationSlideOut 0.3s ease-out';
       setTimeout(() => {
         notification.remove();
-        style.remove();
       }, 300);
     }, 3000);
   }
